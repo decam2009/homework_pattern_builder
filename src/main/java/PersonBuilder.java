@@ -3,12 +3,12 @@ import exceptions.ZeroAgeException;
 
 import java.util.OptionalInt;
 
-public class PersonBuilder implements IPersonBuilder {
+public class PersonBuilder {
 
-    protected String name;
-    protected String surname;
-    protected OptionalInt age;
-    protected String address;
+    private String name;
+    private String surname;
+    private OptionalInt age;
+    private String address;
 
     public boolean hasAge() {
         return this.age.isPresent();
@@ -17,7 +17,7 @@ public class PersonBuilder implements IPersonBuilder {
     public boolean hasAddress() {
         return this.address != null;
     }
-    
+
     public PersonBuilder() {
     }
 
@@ -48,12 +48,14 @@ public class PersonBuilder implements IPersonBuilder {
     }
 
     public PersonBuilder setAddress(String address) {
+
         this.address = address;
         return this;
     }
 
-    @Override
     public Person build() {
+        if (name == null || surname == null || age == null || address == null)
+            throw new NullPointerException();
         return new Person(name, surname, age, address);
     }
 }
